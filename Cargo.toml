@@ -1,0 +1,18 @@
+[package]
+name = "order_data_demo_service"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tokio = { version = "1.40.0", features = ["rt-multi-thread"] }
+axum = {version = "0.7.5", features = ["macros"]}
+serde = { version = "1.0.209", features = ["derive"] }
+serde_json = "1.0.127"
+moka = { version = "0.12.8", features = ["future"] }
+tokio-postgres = {version = "0.7.11", features = ["with-chrono-0_4", "with-serde_json-1"]}
+bb8-postgres = "0.8.1"
+dotenv = "0.15.0"
+chrono = "0.4.38"
+thiserror = "1.0.63"
+log = "0.4.22"
+env_logger = "0.11.5"
