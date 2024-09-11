@@ -3,7 +3,7 @@ POST http://0.0.0.0:8000/
 Content-Type: application/json
 
 {
-  "order_uid": "10163feb7b2b84b6test",
+  "order_uid": "8163feb7b2b84b6test",
   "track_number": "WBILMTESTTRACK",
   "entry": "WBIL",
   "delivery": {
@@ -53,5 +53,5 @@ Content-Type: application/json
 }
 
 ###
-GET http://0.0.0.0:8000/?order_uid=10163feb7b2b84b6test
+GET http://0.0.0.0:8000/?order_uid=8163feb7b2b84b6test
 Content-Type: application/json

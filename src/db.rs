@@ -4,9 +4,9 @@ use log::{error, info};
 use serde_json::Value;
 use tokio_postgres::NoTls;
 
-use crate::data::OrderRequest;
 use crate::errors::OrderApiError;
 
+// Создание пула потоков для работы с БД postgresql, благодаря bb8 и tokio-postgres
 pub async fn create_pool(db_address: String) -> Result<Pool<PostgresConnectionManager<NoTls>>, OrderApiError> {
     let manager = PostgresConnectionManager::new_from_stringlike(db_address, NoTls)
         .map_err(OrderApiError::DBCreatingManagerError)?;
@@ -15,16 +15,17 @@ pub async fn create_pool(db_address: String) -> Result<Pool<PostgresConnectionMa
     Ok(pool)
 }
 
+// Функция для возврата запрошенного по order_uid заказа из БД
 pub async fn get_order(
     db_pool: &Pool<PostgresConnectionManager<NoTls>>,
-    order_request: OrderRequest,
+    order_uid: String,
 ) -> Result<Value, OrderApiError> {
     let connection = db_pool
         .get()
         .await
         .map_err(OrderApiError::DBPoolError)?;
     let row = connection
-        .query_opt("SELECT * FROM orders WHERE order_uid = $1", &[&order_request.order_uid])
+        .query_opt("SELECT * FROM orders WHERE order_uid = $1", &[&order_uid])
         .await
         .map_err(OrderApiError::DBQueryError)?;
     if let Some(row) = row {
@@ -41,6 +42,7 @@ pub async fn get_order(
     }
 }
 
+// Функция для сохранения заказа в БД с возвращением его order_uid
 pub async fn create_order(
     db_pool: &Pool<PostgresConnectionManager<NoTls>>,
     order_uid: String,

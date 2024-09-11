@@ -1,6 +1,8 @@
 use serde::{Deserialize, Serialize};
-use serde_json::Value;
 
+// Модель заказа из data.json(model.json)
+// Используется также для валидации входящего json
+//==================================================================================================
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Order {
     pub order_uid: String,
@@ -58,17 +60,10 @@ pub struct Item {
     pub brand: String,
     pub status: i32,
 }
-
 //==================================================================================================
 
+// Структура для запроса заказа из БД или кэша
 #[derive(Deserialize, Debug)]
 pub struct OrderRequest {
     pub order_uid: String,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug)]
-pub struct CreateOrderRequest {
-    pub order_uid: String,
-    #[serde(flatten)]
-    pub body: Value,
 }

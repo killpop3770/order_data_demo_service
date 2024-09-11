@@ -5,6 +5,7 @@ use bb8_postgres::bb8::RunError;
 use serde_json::json;
 use thiserror::Error;
 
+// Enum используется для типизации и автогенерации текста ошибки
 #[derive(Error, Debug)]
 pub enum OrderApiError {
     #[error("Error to create connection manager: {0}")]
@@ -23,6 +24,7 @@ pub enum OrderApiError {
     SerDeError(serde_json::Error),
 }
 
+// Реализация IntoResponse для enum для последующей возможности вернуть данные об ошибке пользователю
 impl IntoResponse for OrderApiError {
     fn into_response(self) -> Response {
         let (status, message) = match self {

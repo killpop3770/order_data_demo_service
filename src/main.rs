@@ -19,7 +19,6 @@ use moka::future::{Cache, CacheBuilder};
 use serde_json::Value;
 use crate::handlers::{create_order, get_order, not_found};
 
-//===================================================================
 #[tokio::main]
 async fn main() {
     let config = Config::from_env().expect("Can not create config file from .env!");
@@ -52,15 +51,15 @@ async fn main() {
     axum::serve(listener, app).await.unwrap();
 }
 
-//===================================================================
+// Структура состояние приложение для передачи между роутами прилложения
 #[derive(Clone)]
 struct AppState {
     db_pool: Arc<Pool<PostgresConnectionManager<NoTls>>>,
     cache: Arc<Cache<String, Value>>,
     keys: Arc<Mutex<Vec<String>>>,
 }
-//===================================================================
 
+// Структура конфиг файла для удобства использования
 pub struct Config {
     pub database_url: String,
     pub service_address: String,
